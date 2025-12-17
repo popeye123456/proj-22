@@ -14,6 +14,7 @@ phases:
       - docker tag project-22:latest $IMAGE_URI
 
   post_build:
-    commands:
-      - echo Pushing Docker image...
-      - docker push $IMAGE_URI
+  commands:
+    - docker push $IMAGE_URI
+    - printf '[{"name":"nginx","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
+
