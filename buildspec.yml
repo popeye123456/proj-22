@@ -1,22 +1,20 @@
 version: 0.2
 
+env:
+  parameter-store:
+    DOCKER_USERNAME: /dockerhub/username
+    DOCKER_PASSWORD: /dockerhub/password
+
 phases:
   pre_build:
     commands:
-      - echo Logging in to Docker Hub...
-      - printf "%s" "$DOCKERHUB_PASSWORD" | docker login docker.io --username "$DOCKERHUB_USERNAME" --password-stdin
-      - IMAGE_URI=$DOCKERHUB_USERNAME/project-22:latest
+      - echo Logging into Docker Hub
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
   build:
     commands:
-      - docker build -t project-22 .
-      - docker tag project-22:latest $IMAGE_URI
+      - docker build -t yourdockerhubuser/nginx-app:latest .
 
   post_build:
     commands:
-      - docker push $IMAGE_URI
-      - printf '[{"name":"nginx","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
-
-artifacts:
-  files:
-    - imagedefinitions.json
+      - docker push yourdockerhubuser/nginx-app:latest
