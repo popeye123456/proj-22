@@ -4,18 +4,16 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Docker Hub...
-      - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+      - printf "%s" "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
       - IMAGE_URI=$DOCKERHUB_USERNAME/project-22:latest
 
   build:
     commands:
-      - echo Building Docker image...
       - docker build -t project-22 .
       - docker tag project-22:latest $IMAGE_URI
 
   post_build:
     commands:
-      - echo Pushing Docker image...
       - docker push $IMAGE_URI
       - printf '[{"name":"nginx","imageUri":"%s"}]' "$IMAGE_URI" > imagedefinitions.json
 
