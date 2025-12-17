@@ -13,8 +13,8 @@ phases:
 
   build:
     commands:
-      - docker build -t yourdockerhubuser/nginx-app:latest .
+      - docker build -t tom12345524524/project-22:latest .
 
   post_build:
     commands:
-      - docker push yourdockerhubuser/nginx-app:latest
+      - docker push tom12345524524/project-22:latest
