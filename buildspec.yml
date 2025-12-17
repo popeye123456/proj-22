@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Docker Hub...
-      - printf "%s" "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - printf "%s" "$DOCKERHUB_PASSWORD" | docker login docker.io --username "$DOCKERHUB_USERNAME" --password-stdin
       - IMAGE_URI=$DOCKERHUB_USERNAME/project-22:latest
 
   build:
